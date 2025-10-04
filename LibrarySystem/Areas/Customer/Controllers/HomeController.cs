@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LibrarySystem.Areas.Customer.Controllers;
 
+[Area("Customer")]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
@@ -22,7 +23,16 @@ public class HomeController : Controller
         var Books = _context.Books.Include(e => e.Loans);
         return View(Books.ToList());
     }
-
+    public IActionResult Details(int id)
+    {
+       var Books= _context.Books.Include(e => e.Loans).ThenInclude(e => e.Reader).FirstOrDefault(b => b.Id == id);
+        if (Books == null)
+        {
+            return NotFound();
+        }
+        return View(Books);
+    }
+   
     public IActionResult Privacy()
     {
         return View();

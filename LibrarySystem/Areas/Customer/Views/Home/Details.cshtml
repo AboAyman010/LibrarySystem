@@ -1,0 +1,54 @@
+﻿@model Book
+
+@{
+    ViewData["Title"] = "تفاصيل الكتب";
+}
+<div class="container my-5">
+    <div class="card shadow-lg rounded-4 border-0 overflow-hidden">
+        <div class="row g-0">
+            <div class="col-md-4 bg-light d-flex align-items-center justify-content-center p-3">
+                <img src="@Model.ImageUrl" alt="@Model.Title" class="img-fluid rounded" style="max-height:300px; object-fit:contain;" />
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h2 class="fw-bold text-primary">@Model.Title</h2>
+                    <p class="fs-5 mb-2"><strong>المؤلف:</strong> @Model.Author</p>
+                    <p><strong>إجمالي النسخ:</strong> @Model.TotalCopies</p>
+                    <p><strong>النسخ المتبقية:</strong> @Model.AvailableCopies</p>
+
+                    @if (Model.Loans != null && Model.Loans.Any())
+                    {
+                        <h4 class="mt-4 text-success fw-bold">📚 الإعارات الحالية:</h4>
+                        <table class="table table-bordered mt-3">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>اسم القارئ</th>
+                                    <th>تاريخ الإعارة</th>
+                                    <th>تاريخ الإرجاع</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var loan in Model.Loans)
+                                {
+                                    <tr>
+                                        <td>@loan.Reader.Name</td>
+                                        <td>@loan.LoanDate.ToShortDateString()</td>
+                                        <td>@loan.ReturnDate?.ToShortDateString()</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <p class="text-muted mt-3">لا توجد إعارات حالياً.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a asp-action="Index" class="btn btn-secondary">🔙 رجوع إلى القائمة</a>
+    </div>
+</div>
