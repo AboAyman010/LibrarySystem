@@ -6,6 +6,10 @@ namespace LibrarySystem.DataAccess
 {
     public class ApplicationDbContext :DbContext
     {
+        public ApplicationDbContext()
+        {
+        }
+
         // Constructor بياخد الإعدادات (Connection String وغيره)
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options)
         {

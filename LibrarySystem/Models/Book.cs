@@ -17,6 +17,10 @@ namespace LibrarySystem.Models
 
         [Range(0, 1000)]
         public int AvailableCopies { get; set; } = 1;
+
+        [StringLength(300)]
+        public string? ImageUrl { get; set; }  // مسار أو اسم الصورة
+
         public ICollection<Loan> Loans { get; set; }
 
     }

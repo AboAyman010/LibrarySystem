@@ -1,31 +1,33 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using LibrarySystem.Models;
+using LibrarySystem.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
-namespace LibrarySystem.Controllers;
+namespace LibrarySystem.Areas.Customer.Controllers;
 
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+   private readonly ApplicationDbContext _context;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
     {
         _logger = logger;
+        _context = context;
     }
 
     public IActionResult Index()
     {
-        return View();
+        var Books = _context.Books.Include(e => e.Loans);
+        return View(Books.ToList());
     }
 
     public IActionResult Privacy()
     {
         return View();
     }
-    public IActionResult Welcome()
-    {
-        return View();
-    }
+    
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
