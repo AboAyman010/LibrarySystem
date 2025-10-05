@@ -14,14 +14,58 @@
 @* </header> *@
 
 <div class="container">
+
+    <!-- Filter Section -->
+    <section class="py-3 filter-bar">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6" style="background-color: rgba(var(--bs-light-rgb), var(--bs-bg-opacity)) !important; padding: 20px; border-radius: 10px;">
+                    <form method="get">
+                        <div class="row g-2">
+
+                            <!-- Book Title -->
+                            <div class="col-12">
+                                <input type="text" class="form-control" placeholder="اسم الكتاب" name="BookTitle" value="@ViewBag.BookTitle">
+                            </div>
+
+                            <!-- BookAuthor -->
+                            <div class="col-12">
+                                <select name="BookAuthor" class="form-control">
+                                    <option value="">-- اختر المؤلف --</option>
+                                    @foreach (var item in ViewBag.Books)
+                                    {
+                                        if (ViewBag.BookAuthor != null && ViewBag.BookAuthor == item.Author)
+                                        {
+                                            <option value="@item.Author" selected>@item.Author</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.Author">@item.Author</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <!-- Submit Button -->
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-dark w-100">بحث</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
     <!-- Section-->
     <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 @foreach(var item in Model)
                 {
+
                     <div class="col mb-5">
                         <div class="card h-100">
+                            <!-- Sale badge-->
+                            <div class="badge bg-danger text-white position-absolute" style="top: 0.5rem; right: 0.5rem">@item.Author</div>
                             <!-- Product image-->
                             <img class="card-img-top book-image" src="@item.ImageUrl" alt="@item.Title" />
 

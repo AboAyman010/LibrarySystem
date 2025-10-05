@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using LibrarySystem.Models;
 using LibrarySystem.DataAccess;
 using Microsoft.EntityFrameworkCore;
+using LibrarySystem.Models.ViewModel;
+using System.Linq;
 
 namespace LibrarySystem.Areas.Customer.Controllers;
 
@@ -18,9 +20,24 @@ public class HomeController : Controller
         _context = context;
     }
 
-    public IActionResult Index()
+    public IActionResult Index(BookFilterVM bookFilterVM)
     {
-        var Books = _context.Books.Include(e => e.Loans);
+        var Books = _context.Books.Include(e => e.Loans).AsQueryable();
+        if(bookFilterVM.BookTitle is not null)
+        {
+            Books = Books.Where(e => e.Title.Contains(bookFilterVM.BookTitle));
+            ViewBag.BookTitle = bookFilterVM.BookTitle;
+        }
+        if (bookFilterVM.BookAuthor is not null)
+        {
+            Books = Books.Where(e => e.Author.Contains(bookFilterVM.BookAuthor));
+            ViewBag.BookAuthor = bookFilterVM.BookAuthor;
+        }
+        ViewBag.Books = _context.Books
+         .Select(b => new { b.Author })
+         .Distinct()
+         .ToList();
+
         return View(Books.ToList());
     }
     public IActionResult Details(int id)
