@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace LibrarySystem.Areas.Customer.Controllers;
 
-[Area("Customer")]
+[Area(SD.CustomerArea)]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;

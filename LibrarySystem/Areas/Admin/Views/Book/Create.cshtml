@@ -1,0 +1,72 @@
+﻿<div class="container">
+    <div class="row my-3">
+        <div class=" col-12">
+            <form method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="name">Title</label>
+                    <input type="text" class="form-control" id="title" name="Title" placeholder="Enter Title">
+                </div>
+                <div class="mb-3">
+                    <label for="description">Description</label>
+                    <input type="text" class="form-control" id="description" name="Description" placeholder="Enter Description">
+                </div>
+
+
+
+                <div class="mb-3">
+                    <label for="releaseDate">ReleaseDate</label>
+                    <input type="text" class="form-control" id="releaseDate" name="ReleaseDate" placeholder="Enter ReleaseDate">
+                </div>
+
+
+
+                <div class="mb-3">
+                    <label for="language">Language</label>
+                    <input type="text" class="form-control" id="language" name="Language" placeholder="Enter Language">
+                </div>
+                <div class="mb-3">
+                    <label for="posterUrl">PosterUrl</label>
+                    <input type="file" class="form-control" id="posterUrl" name="PosterUrl" accept="image/*" onchange="previewImage(event)">
+                </div>
+
+                <!-- صورة العرض المبدئي -->
+                <div class="mb-3">
+                    <img id="preview" src="#" alt="Preview" style="max-width: 200px; display: none; border: 1px solid #ccc; padding: 5px; margin-top:10px;" />
+                </div>
+                <script>
+                    function previewImage(event) {
+                        var reader = new FileReader();
+                        reader.onload = function () {
+                            var output = document.getElementById('preview');
+                            output.src = reader.result;
+                            output.style.display = 'block'; // يخلي الصورة تظهر بعد اختيارها
+                        };
+                        reader.readAsDataURL(event.target.files[0]);
+                    }
+                </script>
+                <div class="mb-3">
+                    <label for="price">Price</label>
+                    <input type="text" class="form-control" id="price" name="Price" placeholder="Enter Price">
+                </div>
+                <div class="mb-3">
+                    <label for="rating">Rating</label>
+                    <input type="text" class="form-control" id="rating" name="Rating" placeholder="Enter Rating">
+                </div>
+                <div class="mb-3">
+                    <label for="categoryId">Category</label>
+                    <select name="CategoryId" class="form-select">
+                        @foreach (var item in Model.Categories)
+                        {
+                            <option value="@item.CategoryId">@item.Name</option>
+                        }
+                    </select>
+
+                </div>
+
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+
+</div>
