@@ -20,7 +20,7 @@ public class HomeController : Controller
         _context = context;
     }
 
-    public IActionResult Index(BookFilterVM bookFilterVM)
+    public IActionResult Index(BookFilterVM bookFilterVM, int page = 1)
     {
         var Books = _context.Books.Include(e => e.Loans).AsQueryable();
         if(bookFilterVM.BookTitle is not null)
@@ -37,6 +37,15 @@ public class HomeController : Controller
          .Select(b => new { b.Author })
          .Distinct()
          .ToList();
+
+
+
+        //pagination
+        double totalPages = Math.Ceiling(Books.Count() / 3.0);
+        int CurrentPage = page;
+        ViewBag.totalPages = totalPages;
+        ViewBag.CurrentPage = CurrentPage;
+        Books = Books.Skip((page - 1) * 3).Take(3);
 
         return View(Books.ToList());
     }
