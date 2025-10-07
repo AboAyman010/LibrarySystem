@@ -1,4 +1,5 @@
 ﻿using LibrarySystem.DataAccess;
+using LibrarySystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,8 +22,35 @@ namespace LibrarySystem.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+         var Books=   _context.Books;
+       
+            return View(Books.ToList());
+        }
 
-            return View();
+        [HttpPost]
+        public IActionResult Create(Book book)
+        {
+            _context.Books.Add(book);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+         var book=   _context.Books.FirstOrDefault(e => e.Id == id);
+            if(book is null)
+            {
+                return RedirectToAction(SD.NotFoundPage, SD.HomeController);
+            }
+            return View(book);
+        }
+        [HttpPost]
+        public IActionResult Edit(Book book)
+        {
+            _context.Books.Update(book);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
         }
     }
 }

@@ -1,32 +1,33 @@
-﻿<div class="container">
+﻿@model Book
+<div class="container">
     <div class="row my-3">
         <div class=" col-12">
             <form method="post" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="name">Title</label>
-                    <input type="text" class="form-control" id="Title" name="Title" placeholder="Enter Title">
+                    <input type="text" class="form-control" id="Title" name="Title" value="@Model.Title" placeholder="Enter Title">
                 </div>
                 <div class="mb-3">
                     <label for="description">Author</label>
-                    <input type="text" class="form-control" id="Author" name="Author" placeholder="Enter Author">
+                    <input type="text" class="form-control" id="Author" name="Author" value="@Model.Author" placeholder="Enter Author">
                 </div>
 
 
 
                 <div class="mb-3">
                     <label for="releaseDate">TotalCopies</label>
-                    <input type="number" class="form-control" id="TotalCopies" name="TotalCopies" placeholder="Enter the TotalCopies">
+                    <input type="number" class="form-control" id="TotalCopies" name="TotalCopies" value="@Model.TotalCopies" placeholder="Enter the TotalCopies">
                 </div>
 
 
 
                 <div class="mb-3">
                     <label for="language">AvailableCopies</label>
-                    <input type="number" class="form-control" id="AvailableCopies" name="AvailableCopies" placeholder="Enter the AvailableCopies">
+                    <input type="number" class="form-control" id="AvailableCopies" name="AvailableCopies" value="@Model.AvailableCopies" placeholder="Enter the AvailableCopies">
                 </div>
                 <div class="mb-3">
                     <label for="posterUrl">ImageUrl</label>
-                    <input type="file" class="form-control" id="ImageUrl" name="ImageUrl">
+                    <input type="file" class="form-control" id="ImageUrl" name="ImageUrl" value="@Model.ImageUrl">
                 </div>
 
                 <!-- صورة العرض المبدئي -->
@@ -44,7 +45,7 @@
                         reader.readAsDataURL(event.target.files[0]);
                     }
                 </script>
-             
+
 
 
                 <button type="submit" class="btn btn-primary">Submit</button>

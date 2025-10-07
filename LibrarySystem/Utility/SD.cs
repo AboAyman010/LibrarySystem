@@ -8,5 +8,7 @@
 
         public const string NotFoundPage = "NotFoundPage";
 
+        //Controller
+        public const string HomeController = "Home";
     }
 }
