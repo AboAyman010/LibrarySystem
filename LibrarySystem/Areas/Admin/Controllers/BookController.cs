@@ -49,6 +49,11 @@ namespace LibrarySystem.Areas.Admin.Controllers
                 _context.SaveChanges();
 
                 TempData["success-notification"] = "Add Book Successfully";
+                Response.Cookies.Append("success-notification", "Add Book Successfully", new()
+                {
+                    Secure = true,
+                    Expires = DateTime.Now.AddDays(1)
+                });
                 return RedirectToAction(nameof(Index));
               
             }
