@@ -22,15 +22,13 @@ namespace LibrarySystem.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-         var Books=   _context.Books;
-       
-            return View(Books.ToList());
+            return View();
         }
 
         [HttpPost]
         public IActionResult Create(Book book,IFormFile ImageUrl)
         {
-          
+         
             if (ImageUrl is not null && ImageUrl.Length > 0)
             {
                 var fileName = Guid.NewGuid().ToString() + Path.GetExtension(ImageUrl.FileName);
@@ -49,7 +47,10 @@ namespace LibrarySystem.Areas.Admin.Controllers
                 //Save In Db
                 _context.Books.Add(book);
                 _context.SaveChanges();
+
+                TempData["success-notification"] = "Add Book Successfully";
                 return RedirectToAction(nameof(Index));
+              
             }
             return BadRequest();
                
@@ -61,6 +62,7 @@ namespace LibrarySystem.Areas.Admin.Controllers
          var book=   _context.Books.FirstOrDefault(e => e.Id == id);
             if(book is null)
             {
+
                 return RedirectToAction(SD.NotFoundPage, SD.HomeController);
             }
             return View(book);
@@ -114,6 +116,7 @@ namespace LibrarySystem.Areas.Admin.Controllers
         //update in db
             _context.Books.Update(book);
             _context.SaveChanges();
+            TempData["success-notification"] = "Update Book Successfully";
             return RedirectToAction(nameof(Index));
         }
        
@@ -138,6 +141,8 @@ namespace LibrarySystem.Areas.Admin.Controllers
             //Remove in db
             _context.Books.Remove(book);
             _context.SaveChanges();
+            TempData["success-notification"] = "Delete Book Successfully";
+
             return RedirectToAction(nameof(Index));
         }
     }

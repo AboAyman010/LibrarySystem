@@ -1,14 +1,18 @@
-﻿<div class="container">
+﻿@model LibrarySystem.Models.Book
+
+<div class="container">
     <div class="row my-3">
         <div class=" col-12">
-            <form method="post" enctype="multipart/form-data">
+            <form asp-action="Create" enctype="multipart/form-data" method="post">
                 <div class="mb-3">
                     <label for="name">Title</label>
                     <input type="text" class="form-control" id="Title" name="Title" placeholder="Enter Title">
+                    <span asp-validation-for="Title" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                     <label for="description">Author</label>
                     <input type="text" class="form-control" id="Author" name="Author" placeholder="Enter Author">
+                    <span asp-validation-for="Author" class="text-danger"></span>
                 </div>
 
 
@@ -16,6 +20,8 @@
                 <div class="mb-3">
                     <label for="releaseDate">TotalCopies</label>
                     <input type="number" class="form-control" id="TotalCopies" name="TotalCopies" placeholder="Enter the TotalCopies">
+                    <span asp-validation-for="TotalCopies" class="text-danger"></span>
+
                 </div>
 
 
@@ -23,10 +29,14 @@
                 <div class="mb-3">
                     <label for="language">AvailableCopies</label>
                     <input type="number" class="form-control" id="AvailableCopies" name="AvailableCopies" placeholder="Enter the AvailableCopies">
+                    <span asp-validation-for="AvailableCopies" class="text-danger"></span>
+
                 </div>
                 <div class="mb-3">
                     <label for="posterUrl">ImageUrl</label>
                     <input type="file" class="form-control" id="ImageUrl" name="ImageUrl">
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
+
                 </div>
 
                 <!-- صورة العرض المبدئي -->
@@ -53,3 +63,7 @@
     </div>
 
 </div>
+@section Scripts {
+    <partial name="_NotifactionPartial" />
+    <partial name="_ValidationScriptsPartial" />
+}
