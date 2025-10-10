@@ -1,6 +1,14 @@
+using LibrarySystem.DataAccess;
+
+using LibrarySystem.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+
 using System;
+
 namespace LibrarySystem.DataAccess
+    
 
 {
     public class Program
@@ -13,10 +21,21 @@ namespace LibrarySystem.DataAccess
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
       options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(Option =>
+            {
+                Option.Password.RequiredLength = 8;
+                Option.Password.RequireNonAlphanumeric = false;
+                Option.User.RequireUniqueEmail = true;
+            })
+               .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
 
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddTransient<IEmailSender, EmailSender>();
 
             var app = builder.Build();
 
