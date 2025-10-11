@@ -1,11 +1,13 @@
 ﻿using LibrarySystem.DataAccess;
 using LibrarySystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibrarySystem.Areas.Admin.Controllers
 {
     [Area(SD.AdminArea)]
+    [Authorize(Roles = $"{SD.SuperAdminRole},{SD.AdminArea}")]
     public class BookController : Controller
     {
         private readonly ApplicationDbContext _context;

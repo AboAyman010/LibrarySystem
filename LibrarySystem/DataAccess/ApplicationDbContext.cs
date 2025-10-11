@@ -18,6 +18,8 @@ namespace LibrarySystem.DataAccess
         public DbSet<Reader> Readers { get; set; }
         public DbSet<Loan> Loans { get; set; }
 
+        public DbSet<UserOTP> UserOTPs { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

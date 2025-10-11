@@ -30,13 +30,22 @@ namespace LibrarySystem.DataAccess
                .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Identity/Account/Login";
+                options.AccessDeniedPath = "/Customer/Home/NotFoundPage";
+            });
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
             builder.Services.AddTransient<IEmailSender, EmailSender>();
 
+
+            builder.Services.AddSession(option =>
+            {
+                option.IdleTimeout = TimeSpan.FromMinutes(50);
+            });
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

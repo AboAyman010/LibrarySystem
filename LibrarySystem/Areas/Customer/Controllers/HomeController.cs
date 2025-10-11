@@ -5,10 +5,12 @@ using LibrarySystem.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using LibrarySystem.Models.ViewModel;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LibrarySystem.Areas.Customer.Controllers;
 
 [Area(SD.CustomerArea)]
+[Authorize]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
