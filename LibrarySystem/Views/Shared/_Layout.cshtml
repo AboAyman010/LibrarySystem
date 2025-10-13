@@ -33,6 +33,7 @@
                         </ul>
                     </li>
 
+                    @* "لو المستخدم الحالي دوره SuperAdmin أو Admin → اعرض له رابط (Management System)." *@
 
                     @if (User.IsInRole(SD.SuperAdminRole) || User.IsInRole(SD.AdminRole))
                     {

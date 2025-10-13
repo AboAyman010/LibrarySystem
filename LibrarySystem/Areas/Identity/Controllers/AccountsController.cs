@@ -29,20 +29,42 @@ namespace LibrarySystem.Areas.Identity.Controllers
         }
 
         [HttpGet]
+
         public IActionResult Register()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+
+            }
             return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> Register(RegisterVM registerVM)
         {
-            ApplicationUser applicationUser = registerVM.Adapt<ApplicationUser>();
+            if (!ModelState.IsValid)
+            {
+                return View(registerVM);
+            }
+
+            ApplicationUser applicationUser = new()
+            {
+                Name = registerVM.Name,
+                Email = registerVM.Email,
+                City = registerVM.City,
+                Street = registerVM.Street,
+                State = registerVM.State,
+                ZipCode = registerVM.ZipCode,
+                UserName = registerVM.UserName,
+            };
+            //ApplicationUser applicationUser = registerVM.Adapt<ApplicationUser>();
             var Result = await _userManager.CreateAsync(applicationUser,registerVM.Password);
             if (!Result.Succeeded)
             {
                 foreach (var item in Result.Errors)
                 {
+                    Console.WriteLine($"Error: {item.Description}");
+
                     ModelState.AddModelError(string.Empty, item.Description);
                 }
                 return View(registerVM);
@@ -50,7 +72,7 @@ namespace LibrarySystem.Areas.Identity.Controllers
             }
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(applicationUser);
 
-            var Link = Url.Action("ConfirmEmail", "Account", new
+            var Link = Url.Action("ConfirmEmail", "Accounts", new
             {
                 area = "Identity"
             }
@@ -61,7 +83,7 @@ namespace LibrarySystem.Areas.Identity.Controllers
 
             TempData["success-notification"] = "Create User Successfully, Confirm Your Email!";
 
-            return RedirectToAction("Login", "Account", new { area = "Identity" });
+            return RedirectToAction("Login", "Accounts", new { area = "Identity" });
         }
         [HttpGet]
         public IActionResult Login()
@@ -137,12 +159,12 @@ namespace LibrarySystem.Areas.Identity.Controllers
 
             }
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            var Link = Url.Action("ConfirmEmail", "Account", new { area = "Identity", token = token, UserId = user.Id }, Request.Scheme);
+            var Link = Url.Action("ConfirmEmail", "Accounts", new { area = "Identity", token = token, UserId = user.Id }, Request.Scheme);
             await _emailSender.SendEmailAsync(user.Email!, "Confirm Your Email", $"<h1>Confirm Your Email By Click Here<a href='{Link}'>Here</a></h1>");
 
             TempData["success-notification"] = "Send Email Successfully, Confirm Your Email!";
 
-            return RedirectToAction("Login", "Account", new { area = "Identity" });
+            return RedirectToAction("Login", "Accounts", new { area = "Identity" });
         }
         [HttpGet]
         public IActionResult ForgetPassword()
@@ -197,7 +219,7 @@ namespace LibrarySystem.Areas.Identity.Controllers
             }
 
             TempData["success-notification"] = "Success OTP";
-            return RedirectToAction("NewPassword", "Account", new { area = "Identity", UserId = user.Id });
+            return RedirectToAction("NewPassword", "Accounts", new { area = "Identity", UserId = user.Id });
         }
         [HttpGet]
         public IActionResult NewPassword(string UserId)
@@ -228,12 +250,12 @@ namespace LibrarySystem.Areas.Identity.Controllers
             await _userManager.ResetPasswordAsync(user, token, newPasswordVM.Password);
 
             TempData["success-notification"] = "Change Password Successfully!";
-            return RedirectToAction("Login", "Account", new { area = "Identity" });
+            return RedirectToAction("Login", "Accounts", new { area = "Identity" });
         }
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Login", "Account", new { area = "Identity" });
+            return RedirectToAction("Login", "Accounts", new { area = "Identity" });
         }
     }
         

@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace LibrarySystem.Areas.Customer.Controllers;
 
 [Area(SD.CustomerArea)]
-[Authorize]
+
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;

@@ -1,14 +1,14 @@
 ﻿using LibrarySystem.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System;
 
 namespace LibrarySystem.DataAccess
 {
-    public class ApplicationDbContext :DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext()
-        {
-        }
+       
 
         // Constructor بياخد الإعدادات (Connection String وغيره)
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options)
@@ -35,5 +35,7 @@ namespace LibrarySystem.DataAccess
                 .WithOne(l => l.Reader)
                 .HasForeignKey(l => l.ReaderId);
         }
+     
+       
     }
 }
