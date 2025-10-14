@@ -29,7 +29,6 @@ namespace LibrarySystem.Areas.Identity.Controllers
         }
 
         [HttpGet]
-
         public IActionResult Register()
         {
             if (User.Identity.IsAuthenticated)
@@ -40,10 +39,20 @@ namespace LibrarySystem.Areas.Identity.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterVM registerVM)
         {
             if (!ModelState.IsValid)
             {
+                //عشان اعرف ايه الايرورز 
+                foreach (var key in ModelState.Keys)
+                {
+                    var errors = ModelState[key].Errors;
+                    foreach (var error in errors)
+                    {
+                        Console.WriteLine($"Key: {key}, Error: {error.ErrorMessage}");
+                    }
+                }
                 return View(registerVM);
             }
 
