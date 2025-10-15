@@ -42,17 +42,10 @@ namespace LibrarySystem.Areas.Identity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterVM registerVM)
         {
-            Console.WriteLine($"Name: {registerVM.Name}");
-            Console.WriteLine($"Email: {registerVM.Email}");
-            Console.WriteLine($"Password: {registerVM.Password}");
-            Console.WriteLine($"UserName: {registerVM.UserName}");
-            Console.WriteLine($"ConfirmPassword: {registerVM.ConfirmPassword}");
+          
             if (!ModelState.IsValid)
             {
-                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-                {
-                    Console.WriteLine(error.ErrorMessage);
-                }
+               
                 return View(registerVM);
             }
 
