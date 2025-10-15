@@ -7,12 +7,16 @@
 
         public const string CustomerArea = "Customer";
         public const string IdentityArea = "Identity";
-        //Actions
 
-        public const string NotFoundPage = "NotFoundPage";
 
         //Controller
         public const string HomeController = "Home";
+
+
+        //Actions
+        public const string NotFoundPage = "NotFoundPage";
+
+     
         // Roles
         public const string SuperAdminRole = "SuperAdminRole";
         public const string AdminRole = "AdminRole";

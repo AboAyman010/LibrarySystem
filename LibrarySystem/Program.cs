@@ -39,6 +39,7 @@ namespace LibrarySystem.DataAccess
                .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+      
 
             // Cookie paths
             builder.Services.ConfigureApplicationCookie(options =>
@@ -53,9 +54,10 @@ namespace LibrarySystem.DataAccess
 
             // Email & Repository
             builder.Services.AddTransient<IEmailSender, EmailSender>();
+            builder.Services.AddScoped<IRepository<UserOTP>, Repository<UserOTP>>();
             builder.Services.AddScoped<IDBInitializer, DBInitializer>();
 
-            builder.Services.AddScoped<IRepository<UserOTP>, Repository<UserOTP>>();
+          
 
            
 
@@ -89,11 +91,7 @@ namespace LibrarySystem.DataAccess
             app.UseSession();
 
 
-            app.MapStaticAssets();
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}")
-                .WithStaticAssets();
+
 
 
             //  «” œ⁄«¡ DBInitializer · Ê·Ìœ «·√œÊ«— Ê«·„” Œœ„ «·√Ê·
@@ -103,6 +101,16 @@ namespace LibrarySystem.DataAccess
                 var dbInitializer = scope.ServiceProvider.GetRequiredService<IDBInitializer>();
                 dbInitializer.Initialize();
             }
+
+
+
+            app.MapStaticAssets();
+
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}")
+                .WithStaticAssets();
+
 
             app.Run();
         }

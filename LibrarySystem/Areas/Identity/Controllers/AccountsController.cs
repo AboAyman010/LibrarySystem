@@ -43,16 +43,7 @@ namespace LibrarySystem.Areas.Identity.Controllers
         public async Task<IActionResult> Register(RegisterVM registerVM)
         {
             if (!ModelState.IsValid)
-            {
-                //عشان اعرف ايه الايرورز 
-                foreach (var key in ModelState.Keys)
-                {
-                    var errors = ModelState[key].Errors;
-                    foreach (var error in errors)
-                    {
-                        Console.WriteLine($"Key: {key}, Error: {error.ErrorMessage}");
-                    }
-                }
+            { 
                 return View(registerVM);
             }
 
@@ -131,6 +122,8 @@ namespace LibrarySystem.Areas.Identity.Controllers
 
                 return View(loginVM);
             }
+
+            //لو اليوسر معموله بلوك ميقدرش يعمل لوجن
             if (!user.LockoutEnabled)
             {
                 TempData["error-notification"] = $"You Have Block till{user.LockoutEnd} ";
