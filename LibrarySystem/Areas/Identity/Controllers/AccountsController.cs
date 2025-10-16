@@ -45,7 +45,8 @@ namespace LibrarySystem.Areas.Identity.Controllers
           
             if (!ModelState.IsValid)
             {
-               
+                TempData["error-notification"] = "Please fill all required fields correctly!";
+
                 return View(registerVM);
             }
 
@@ -69,6 +70,8 @@ namespace LibrarySystem.Areas.Identity.Controllers
 
                     ModelState.AddModelError(string.Empty, item.Description);
                 }
+                TempData["error-notification"] = string.Join(" | ", Result.Errors.Select(e => e.Description));
+
                 return View(registerVM);
 
             }

@@ -56,10 +56,12 @@ namespace LibrarySystem.DataAccess
             builder.Services.AddTransient<IEmailSender, EmailSender>();
             builder.Services.AddScoped<IRepository<UserOTP>, Repository<UserOTP>>();
             builder.Services.AddScoped<IDBInitializer, DBInitializer>();
+            builder.Services.AddScoped<IRepository<Cart>, Repository<Cart>>();
 
-          
 
-           
+
+
+
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
